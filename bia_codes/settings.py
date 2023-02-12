@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'save_database',
     'rest_framework',
+    'save_database',
+    'postcodes_assignment',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +78,12 @@ WSGI_APPLICATION = 'bia_codes.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'BIA',
+        'USER': 'postgres',
+        'PASSWORD': 'post-BIA1',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 

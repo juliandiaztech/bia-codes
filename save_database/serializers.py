@@ -7,3 +7,7 @@ class PostCodesSerializer(serializers.ModelSerializer):
         fields = ('id', 'longitude', 'latitude', 'postcode', 'created_at')
         read_only_fields = ('created_at', )
 
+    def update(self, instance, validated_data):
+        print("dd")
+        print(validated_data)
+

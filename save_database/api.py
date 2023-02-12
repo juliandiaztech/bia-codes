@@ -6,15 +6,12 @@ import json
 import pandas as pd
 
 
-
 @api_view(['GET', 'POST'])
 def view_csv(request):
     if request.method == 'GET':
         queryset = PostCodes.objects.all()
         code_serializer = PostCodesSerializer(queryset, many=True)
         code_serializer = code_serializer.data
-
-
         return HttpResponse(json.dumps(code_serializer), content_type='application/json')
     elif request.method == 'POST':
         csv = request.FILES["file"]
@@ -25,7 +22,14 @@ def view_csv(request):
         post_codes_serializer = PostCodesSerializer(data=df, many=True)
         if post_codes_serializer.is_valid():
             post_codes_serializer.save()
-            print("oki")
         else: 
             print(post_codes_serializer.errors)
         return HttpResponse(json.dumps("recibido"), content_type='application/json')
+
+
+@api_view(['PUT'])
+def update_postcode(request, pk=1010887):
+        postcodes = PostCodes.objects.filter(id = pk).first()
+        print("o")
+        print(postcodes)
+        print("o")

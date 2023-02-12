@@ -8,9 +8,10 @@
 
 
 from django.urls import path
-from .api import view_csv
+from .api import view_csv, update_postcode
 
 urlpatterns = [
         path('datap', view_csv, name='view_csv'),
+        path('update-codes', update_postcode, name='update_postcode'),
 
 ]
