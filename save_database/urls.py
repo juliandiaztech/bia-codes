@@ -1,17 +1,17 @@
 # from rest_framework import routers
-# from .api import view_csv
+# from .api import request_get_postcode
 
 # router = routers.DefaultRouter()
 
-# router.register('api/save_codes', view_csv, 'save_codes')
+# router.register('api/save_codes', request_get_postcode, 'save_codes')
 # urlpatterns = router.urls
 
 
 from django.urls import path
-from .api import view_csv, update_postcode
+from .api import request_get_postcode, update_postcode
 
 urlpatterns = [
-        path('file-csv', view_csv, name='view_csv'),
+        path('file-csv', request_get_postcode, name='request_get_postcode'),
         path('update-codes', update_postcode, name='update_postcode'),
 
 ]

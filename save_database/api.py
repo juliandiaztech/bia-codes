@@ -10,7 +10,7 @@ from .views import read_csv, df_transform_df_to_dict, clean_data_delete_duplicat
 
 
 @api_view(['GET', 'POST'])
-def view_csv(request):
+def request_get_postcode(request):
 
     # Retorna todos los registros de la base de datos - Tabla POSTCODES
     if request.method == 'GET':
@@ -73,7 +73,7 @@ def view_csv(request):
 
             # Request para actualizar postcode en la base de datos
 
-        return HttpResponse(json.dumps("recibido"), content_type='application/json')
+        return HttpResponse(json.dumps("Archivo Procesado"), content_type='application/json')
 
 
 
