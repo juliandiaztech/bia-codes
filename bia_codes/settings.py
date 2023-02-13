@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'bia_codes.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'BIA',
+        'NAME': 'BIA_CODES',
         'USER': 'postgres',
         'PASSWORD': 'post-BIA1',
         'HOST': 'localhost',
