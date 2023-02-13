@@ -5,9 +5,7 @@ from django.http import HttpResponse
 import json 
 import pandas as pd
 import matplotlib.pyplot as plt
-import scipy.stats as stats
-import requests
-from .views import read_csv, df_transform_df_to_dict, clean_data_delete_duplicates, request_for_obtain_postcode_nearest, updated_outlier #update_postcode_on_database, get_all_register, updated_outlier
+from .views import read_csv, df_transform_df_to_dict, clean_data_delete_duplicates, request_for_obtain_postcode_nearest, updated_outlier, update_postcode_on_database
 
 
 
@@ -24,7 +22,7 @@ def view_csv(request):
     
     # Endpoint para recibir el archivo csv y ser puerta de entrada de la api
     elif request.method == 'POST':
-        file_csv = request.FILES["file"] # 
+        file_csv = request.FILES["file"] 
 
         df_csv = read_csv(file_csv) #funcion que lee y crea un dataframe
         number_of_records = len(df_csv)
@@ -53,29 +51,27 @@ def view_csv(request):
             else: 
                 print(post_codes_serializer.errors)
 
+            queryset = PostCodes.objects.all()
+            code_serializer = PostCodesSerializer(queryset, many=True)
+            df_for_update_postcode = pd.DataFrame(code_serializer.data)
+
+            for i in range(len(df_for_update_postcode)):
+                id = df_for_update_postcode.iloc[i]['id']
+                lon = df_for_update_postcode.iloc[i]['longitude']
+                lat = df_for_update_postcode.iloc[i]['latitude']
+                postcode = request_for_obtain_postcode_nearest(lon, lat)
+                if postcode:
+                    re = update_postcode_on_database(id, lon, lat, postcode)
+ 
             # Tratamiento de datos para los OUTLIER  para tabla POSTCODES - 
             data_ourlier= updated_outlier(df_raw, df_clean)
-            print(data_ourlier)
             post_codes_serializer = PostCodesSerializer(data=data_ourlier, many=True)
             if post_codes_serializer.is_valid():
                 post_codes_serializer.save()
             else: 
                 print(post_codes_serializer.errors)
 
-            # Request para obtener postcode de la api https://postcodes.io/
-
-            # register = get_all_register()
-            # print("luisa")
-            # print(register)
-
-            
-            # postcode = request_for_obtain_postcode_nearest(lon, lat) 
- 
-            # # Request para actualizar postcode en la base de datos
-
-            # re = update_postcode_on_database(id, lon, lat, postcode)
-
-
+            # Request para actualizar postcode en la base de datos
 
         return HttpResponse(json.dumps("recibido"), content_type='application/json')
 

@@ -44,14 +44,13 @@ URL = "https://api.postcodes.io/postcodes"
 # @api_view(['POST'])
 # def request_postcodes(request):
 #     # data = [-2.222254, 53.533446]
-#     print(request)
 #     r = requests.post(URL, json=json)
 
 #     if r.status_code == 200:
 #         r = r.json()
-#         # print(r)
+
 #         r = r["result"]
-#         print(r)
+
 
 #         return HttpResponse(json.dumps("bien"), content_type='application/json')
 
